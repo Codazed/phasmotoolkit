@@ -1,29 +1,44 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <v-app>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <v-checkbox v-for="e in evidence" :key="e" :label="e" v-model="selectedEvidence" :value="e" :disabled="!possibleEvidence.includes(e)"></v-checkbox>
+        </div>
+        <div class="col-6">
+          <h3>Possible Ghost types</h3>
+          <p v-for="ghost in possibleGhosts" :key="ghost.name">{{ghost.name}}</p>
+        </div>
+      </div>
+    </div>
+  </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
+import {ghosts, Evidence} from './types';
+const evidence = Object.values(Evidence);
 
-@Component({
+export default Vue.extend({
+  name: 'App',
+
   components: {
-    HelloWorld,
   },
-})
-export default class App extends Vue {}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  data: () => ({
+    evidence: evidence,
+    ghosts: ghosts,
+    selectedEvidence: [] as Evidence[]
+  }),
+  computed: {
+    possibleGhosts: function() {
+      return ghosts.filter(ghost => this.selectedEvidence.every(e => ghost.evidence.includes(e)));
+    },
+    possibleEvidence: function() {
+      const possibleGhosts = ghosts.filter(ghost => this.selectedEvidence.every(e => ghost.evidence.includes(e)));
+      return evidence.filter(e => possibleGhosts.some(ghost => ghost.evidence.includes(e)))
+    }
+  }
+});
+</script>
