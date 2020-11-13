@@ -26,7 +26,7 @@
           <v-btn @click="selectedEvidence = []">Reset</v-btn>
         </div>
         <div class="col-6">
-          <h2>Possible Ghost types</h2>
+          <h2>{{possibleGhosts.length > 1 ? 'Possible Ghost Types' : 'The ghost is a'}}</h2>
           <transition-group name="ghosts">
             <p v-for="ghost in possibleGhosts" :key="ghost.name" class="ghosts-item">{{ghost.name}}</p>
           </transition-group>
