@@ -14,23 +14,32 @@
     </v-sheet>
     <v-container>
       <v-row>
-        <div class="col-6">
-          <h2>Evidence</h2>
-          <v-checkbox class="my-0" v-for="e in evidence" :key="e" v-model="selectedEvidence" :value="e" :disabled="!possibleEvidence.includes(e)">
-            <template v-slot:label>
-              <div :class="possibleEvidence.includes(e) ? '' : 'text-decoration-line-through'">
-                {{e}}
-              </div>
-            </template>
-          </v-checkbox>
-          <v-btn @click="selectedEvidence = []">Reset</v-btn>
-        </div>
-        <div class="col-6">
-          <h2>{{possibleGhosts.length > 1 ? 'Possible Ghost Types' : 'The ghost is a'}}</h2>
-          <transition-group name="ghosts">
-            <p v-for="ghost in possibleGhosts" :key="ghost.name" class="ghosts-item">{{ghost.name}}</p>
-          </transition-group>
-        </div>
+        <v-col>
+          <v-card class="px-5 py-5">
+            <h2>Evidence</h2>
+            <v-checkbox class="my-0" v-for="e in evidence" :key="e" v-model="selectedEvidence" :value="e" :disabled="!possibleEvidence.includes(e)">
+              <template v-slot:label>
+                <div :class="(possibleEvidence.includes(e) ? '' : 'text-decoration-line-through') + (hoveredEvidence.includes(e) ? 'indigo--text' : '')">
+                  {{e}}
+                </div>
+              </template>
+            </v-checkbox>
+            <v-btn @click="selectedEvidence = []">Reset</v-btn>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card class="px-5 py-5">
+            <h2>{{possibleGhosts.length > 1 ? 'Possible Ghost Types' : 'The ghost is a'}}</h2>
+            <transition-group name="ghosts">
+              <v-list-item v-for="ghost in possibleGhosts" :key="ghost.name" class="ghosts-item" @mouseover="hoveredEvidence = ghost.evidence" @mouseleave="hoveredEvidence = []">
+                <v-list-item-content>
+                  <v-list-item-title>{{ghost.name}}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <!-- <p v-for="ghost in possibleGhosts" :key="ghost.name" class="ghosts-item" @mouseover="hoveredEvidence = ghost.evidence" @mouseleave="hoveredEvidence = []">{{ghost.name}}</p> -->
+            </transition-group>
+          </v-card>
+        </v-col>
       </v-row>
     </v-container>
   </v-app>
@@ -52,6 +61,7 @@ export default Vue.extend({
     evidence: evidence,
     ghosts: ghosts,
     selectedEvidence: [] as Evidence[],
+    hoveredEvidence: [] as Evidence[],
   }),
 
   computed: {
@@ -94,7 +104,7 @@ export default Vue.extend({
 }
 
 .ghosts-leave-active {
-  position: absolute;
+  position: absolute !important;
 }
 
 </style>
