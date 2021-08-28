@@ -10,77 +10,94 @@ export enum Evidence {
   SpiritBox = "Spirit Box",
   FreezingTemps = "Freezing Temperatures",
   GhostOrb = "Ghost Orb",
+  DotsProj = "D.O.T.S Projector",
 }
 
 export const ghosts: Ghost[] = [
   {
     name: "Banshee",
-    evidence: [Evidence.EMF, Evidence.Fingerprints, Evidence.FreezingTemps],
+    evidence: [Evidence.GhostOrb, Evidence.Fingerprints, Evidence.DotsProj],
   },
   {
     name: "Demon",
     evidence: [
       Evidence.GhostWriting,
-      Evidence.SpiritBox,
+      Evidence.Fingerprints,
       Evidence.FreezingTemps,
     ],
   },
   {
+    name: "Goryo",
+    evidence: [
+      Evidence.EMF,
+      Evidence.Fingerprints,
+      Evidence.DotsProj,
+    ],
+  },
+  {
     name: "Hantu",
-    evidence: [Evidence.Fingerprints, Evidence.GhostOrb, Evidence.GhostWriting],
+    evidence: [Evidence.Fingerprints, Evidence.GhostOrb, Evidence.FreezingTemps],
   },
   {
     name: "Jinn",
-    evidence: [Evidence.EMF, Evidence.SpiritBox, Evidence.GhostOrb],
+    evidence: [Evidence.EMF, Evidence.Fingerprints, Evidence.FreezingTemps],
   },
   {
     name: "Mare",
-    evidence: [Evidence.SpiritBox, Evidence.FreezingTemps, Evidence.GhostOrb],
+    evidence: [Evidence.SpiritBox, Evidence.GhostWriting, Evidence.GhostOrb],
+  },
+  {
+    name: "Myling",
+    evidence: [
+      Evidence.EMF,
+      Evidence.Fingerprints,
+      Evidence.GhostWriting,
+    ],
   },
   {
     name: "Oni",
-    evidence: [Evidence.EMF, Evidence.GhostWriting, Evidence.SpiritBox],
+    evidence: [Evidence.EMF, Evidence.FreezingTemps, Evidence.DotsProj],
   },
   {
     name: "Phantom",
-    evidence: [Evidence.EMF, Evidence.FreezingTemps, Evidence.GhostOrb],
+    evidence: [Evidence.SpiritBox, Evidence.Fingerprints, Evidence.DotsProj],
   },
   {
     name: "Poltergeist",
-    evidence: [Evidence.Fingerprints, Evidence.SpiritBox, Evidence.GhostOrb],
+    evidence: [Evidence.Fingerprints, Evidence.SpiritBox, Evidence.GhostWriting],
   },
   {
     name: "Revenant",
-    evidence: [Evidence.EMF, Evidence.GhostWriting, Evidence.Fingerprints],
+    evidence: [Evidence.GhostOrb, Evidence.GhostWriting, Evidence.FreezingTemps],
   },
   {
     name: "Shade",
-    evidence: [Evidence.EMF, Evidence.GhostWriting, Evidence.GhostOrb],
+    evidence: [Evidence.EMF, Evidence.GhostWriting, Evidence.FreezingTemps],
   },
   {
     name: "Spirit",
     evidence: [
       Evidence.GhostWriting,
-      Evidence.Fingerprints,
+      Evidence.EMF,
       Evidence.SpiritBox,
     ],
   },
   {
     name: "Wraith",
     evidence: [
-      Evidence.Fingerprints,
+      Evidence.EMF,
       Evidence.SpiritBox,
-      Evidence.FreezingTemps,
+      Evidence.DotsProj,
     ],
   },
   {
     name: "Yokai",
-    evidence: [Evidence.SpiritBox, Evidence.GhostOrb, Evidence.GhostWriting],
+    evidence: [Evidence.SpiritBox, Evidence.GhostOrb, Evidence.DotsProj],
   },
   {
     name: "Yurei",
     evidence: [
-      Evidence.GhostWriting,
+      Evidence.DotsProj,
       Evidence.FreezingTemps,
       Evidence.GhostOrb,
     ],
