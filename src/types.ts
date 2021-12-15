@@ -95,6 +95,10 @@ export const ghosts: Ghost[] = [
     evidence: [Evidence.GhostWriting, Evidence.EMF, Evidence.SpiritBox],
   },
   {
+    name: "The Mimic",
+    evidence: [Evidence.SpiritBox, Evidence.Fingerprints, Evidence.FreezingTemps, Evidence.GhostOrb]
+  },
+  {
     name: "The Twins",
     evidence: [Evidence.EMF, Evidence.SpiritBox, Evidence.FreezingTemps],
   },
