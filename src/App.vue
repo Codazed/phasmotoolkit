@@ -14,8 +14,8 @@
     </v-sheet>
     <v-container>
       <v-row>
-        <v-col>
-          <v-card class="px-5 py-5">
+        <v-col sm="6" md="4">
+          <v-card class="pa-5">
             <h2>Evidence</h2>
             <v-checkbox class="my-0" v-for="e in evidence" :key="e" v-model="selectedEvidence" :value="e" :disabled="!possibleEvidence.includes(e)">
               <template v-slot:label>
@@ -27,18 +27,21 @@
             <v-btn @click="selectedEvidence = []">Reset</v-btn>
           </v-card>
         </v-col>
-        <v-col>
-          <v-card class="px-5 py-5">
-            <h2>{{possibleGhosts.length > 1 ? 'Possible Ghost Types' : 'The ghost is a'}}</h2>
-            <transition-group name="ghosts">
-              <v-list-item v-for="ghost in possibleGhosts" :key="ghost.name" class="ghosts-item" @mouseover="hoveredEvidence = ghost.evidence" @mouseleave="hoveredEvidence = []">
-                <v-list-item-content>
-                  <v-list-item-title>{{ghost.name}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <!-- <p v-for="ghost in possibleGhosts" :key="ghost.name" class="ghosts-item" @mouseover="hoveredEvidence = ghost.evidence" @mouseleave="hoveredEvidence = []">{{ghost.name}}</p> -->
-            </transition-group>
-          </v-card>
+        <v-col sm="6" md="8">
+          <v-expand-transition>`
+            <v-card class="pa-5">
+              <h2>{{possibleGhostsString}}</h2>
+              <v-container>
+                <transition-group name="ghosts" tag="v-row">
+                  <v-col class="text-center" xs="8" sm="6" md="4" lg="2" v-for="ghost in possibleGhosts" :key="ghost.name" @mouseover="hoveredEvidence = ghost.evidence" @mouseleave="hoveredEvidence = []">
+                    <v-card class="pa-2 ghosts-item" :class="(hoveredEvidence == ghost.evidence) ? hoveredColor : nonHoveredColor" style="transition: all 0.5s">
+                      {{ghost.name}}
+                    </v-card>
+                  </v-col>
+                </transition-group>
+              </v-container>
+            </v-card>
+          </v-expand-transition>
         </v-col>
       </v-row>
     </v-container>
@@ -70,6 +73,25 @@ export default Vue.extend({
     possibleEvidence: function() {
       const possibleGhosts = ghosts.filter(ghost => this.selectedEvidence.every(e => ghost.evidence.includes(e)));
       return evidence.filter(e => possibleGhosts.some(ghost => ghost.evidence.includes(e)))
+    },
+    possibleGhostsString: function() {
+      if (this.possibleGhosts.length == 1) {
+        if (!this.possibleGhosts[0].name.startsWith("The")) {
+          const vowelRegex = '^[aeiouAEIOU].*'
+          if (this.possibleGhosts[0].name.match(vowelRegex)) {
+            return "The ghost is an"
+          }
+          return "The ghost is a"
+        }
+        return "The ghost is"
+      }
+      return "The ghost could be"
+    },
+    hoveredColor: function() {
+      return (this.$vuetify.theme.dark ? 'white black--text' : 'blue darken-3 white--text')
+    },
+    nonHoveredColor: function() {
+      return (this.$vuetify.theme.dark ? 'grey darken-4 white--text' : 'white black--text')
     }
   }
 
@@ -104,6 +126,10 @@ export default Vue.extend({
 
 .ghosts-leave-active {
   position: absolute !important;
+}
+
+.ghosts-move {
+  transition: transform 0.5s;
 }
 
 </style>
